@@ -1,0 +1,11 @@
+name: HsRails
+version: 0.1.1
+main: st.netb.mc.hsrails.HsRails
+commands:
+  hsrails:
+    description: Sets new minecart speed limit.
+    usage: /hsrails <multiplier>
+permissions:
+  hsrails.cmd:
+    description: Allows you to use speed cmd
+    default: op
