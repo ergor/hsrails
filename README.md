@@ -11,7 +11,7 @@ The high speed rail multiplier can be changed with the `/hsrails` command.
 ![scrot](https://github.com/ergor/hsrails/blob/master/scrots/scrot.png)
 
 ## Usage
-Place a powered rail on a redstone block to make it a high speed rail. Place on any other block to get regular powered rail. I recommend doing this before corners as to not derail your cart.
+Place a powered rail on a redstone block to make it a high speed rail. Place on any other block to get regular powered rail. When traveling at high speeds, a regular powered rail will quickly slow the cart down towards the stock 8 m/s speed. I recommend building your tracks with regular power rails before corners to prevent derailing, and then accelerate out of the turn with high speed rails.
 
 Use `/hsrails <multiplier>` to tweak how fast high speed rails are. Multiplier must be between 0 and 50.
 
