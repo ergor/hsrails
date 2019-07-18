@@ -9,7 +9,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class HsRails extends JavaPlugin {
 
-    private double speed_multiplier = 1.0d;
+    private static double speed_multiplier = 4.0d;
+
+    public static double getMultiplier() {
+        return speed_multiplier;
+    }
 
     @Override
     public void onEnable() {
@@ -39,16 +43,17 @@ public class HsRails extends JavaPlugin {
                 speed_multiplier = Double.parseDouble(args[0]);
             }
             catch (Exception ignore) {
-                sender.sendMessage(ChatColor.RED + "hsrails: multiplier should be a number");
+                sender.sendMessage(ChatColor.RED + "multiplier should be a number");
                 return false;
             }
 
             if (speed_multiplier > 0 && speed_multiplier <= 50) {
-                sender.sendMessage(ChatColor.AQUA + "hsrails: speed multiplier set to: " + speed_multiplier);
+                sender.sendMessage(ChatColor.AQUA + "speed multiplier set to: " + speed_multiplier);
                 return true;
             }
 
-            sender.sendMessage(ChatColor.RED + "hsrails: multiplier must be greater than 0 and max 50");
+            sender.sendMessage(ChatColor.RED + "multiplier must be greater than 0 and max 50");
+            return true;
         }
 
         return false;
