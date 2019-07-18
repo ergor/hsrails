@@ -9,7 +9,7 @@ Default speed is 4x regular powered rails, ie. 32 m/s, or 115 km/h. This is as f
 The high speed multiplier can be changed with the `/hsrails` command.
 
 ## Usage
-
+[scrot](https://www.github.com/ergor/hsrails/scrots/scrot.png)
 
 ## Compiling
 
