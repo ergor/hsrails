@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class HsRails extends JavaPlugin {
 
-    private static double speed_multiplier = 4.0d;
+    private static double speed_multiplier;
 
     public static double getMultiplier() {
         return speed_multiplier;
@@ -17,6 +17,10 @@ public class HsRails extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig(); // copies default file to data folder, will not override existing file
+        getLogger().info("Reading config");
+        speed_multiplier = getConfig().getDouble("speedMultiplier");
+
         getLogger().info("Registering event listener");
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new MinecartListener(), this);
