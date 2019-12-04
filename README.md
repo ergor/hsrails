@@ -28,7 +28,7 @@ You must be aware of a couple of things while building high-speed tracks:
 - Entering/exiting slopes at high speed _will_ derail you.
 - While traveling at high speeds, a regular powered rail _will_ slow you down.
 
-Derailing at high speeds is a limitation of the game itself, and is probably the reason why rails are so slow in vanilla Minecraft. Thus, when designing your high-speed tracks, you will have to design them like real high-speed train tracks: elongated with smooth turns.
+Derailing at high speeds is a limitation of the game itself, and is probably the reason why rails are so slow in vanilla Minecraft. Thus, when designing your high-speed tracks, you will have to design them like real high-speed train tracks: long stretches with smooth turns.
 
 #### Design guidelines
 
