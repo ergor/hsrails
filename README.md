@@ -40,7 +40,7 @@ These are my recommendations for building efficient high-speed tracks:
 - Before turns and slopes, put one (or sometimes a couple of) regular powered rails to slow down and avoid derailment.
 - After turns and slopes, allow room for acceleration again.
 
-It should go without saying, but I will say it anyway: to maintain high speeds you _must_ build your tracks out of high-speed rails, because regular powered rails will slow you down. Only use regular powered rails in turns and slopes as mentioned above.
+To maintain high speeds you must of course build your tracks out of high-speed rails, because regular powered rails will slow you down. Only mix in regular powered rails in turns and slopes as mentioned above.
 
 
 ### Compiling
