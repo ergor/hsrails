@@ -19,7 +19,15 @@ public class HsRails extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig(); // copies default file to data folder, will not override existing file
         getLogger().info("Reading config");
+
         speed_multiplier = getConfig().getDouble("speedMultiplier");
+        if (speed_multiplier <= 0) {
+            getLogger().info("Warning: speed multiplier set to 0 or below in config. Using value of 0.1 as fallback.");
+            speed_multiplier = 0.1;
+        } else if (speed_multiplier > 8) {
+            getLogger().info("Warning: speed multiplier set above 8 in config. Using value of 8 as fallback.");
+            speed_multiplier = 8d;
+        }
 
         getLogger().info("Registering event listener");
         PluginManager pm = this.getServer().getPluginManager();
@@ -51,12 +59,12 @@ public class HsRails extends JavaPlugin {
                 return false;
             }
 
-            if (speed_multiplier > 0 && speed_multiplier <= 50) {
+            if (speed_multiplier > 0 && speed_multiplier <= 8) {
                 sender.sendMessage(ChatColor.AQUA + "speed multiplier set to: " + speed_multiplier);
                 return true;
             }
 
-            sender.sendMessage(ChatColor.RED + "multiplier must be greater than 0 and max 50");
+            sender.sendMessage(ChatColor.RED + "multiplier must be greater than 0 and max 8");
             return true;
         }
 
