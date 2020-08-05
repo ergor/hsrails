@@ -7,6 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Logger;
+
 public class HsRails extends JavaPlugin {
 
     private static double speed_multiplier;
@@ -15,21 +19,29 @@ public class HsRails extends JavaPlugin {
         return speed_multiplier;
     }
 
+    private static Set<CommandSender> receivedHeadsUp = new HashSet<>();
+
     @Override
     public void onEnable() {
         saveDefaultConfig(); // copies default file to data folder, will not override existing file
-        getLogger().info("Reading config");
+        Logger logger = getLogger();
+        logger.info("Reading config");
 
         speed_multiplier = getConfig().getDouble("speedMultiplier");
         if (speed_multiplier <= 0) {
-            getLogger().info("Warning: speed multiplier set to 0 or below in config. Using value of 0.1 as fallback.");
+            logger.warning("Warning: speed multiplier set to 0 or below in config. Using value of 0.1 as fallback.");
             speed_multiplier = 0.1;
         } else if (speed_multiplier > 8) {
-            getLogger().info("Warning: speed multiplier set above 8 in config. Using value of 8 as fallback.");
+            logger.warning("Warning: speed multiplier set above 8 in config. Using value of 8 as fallback.");
             speed_multiplier = 8d;
         }
 
-        getLogger().info("Registering event listener");
+        if (speed_multiplier > 4) {
+            logger.info("Note: speed multiplier is set above 4. Typically, due server limitations you may not see an increase in speed greater than 4x,"
+                    + " however the carts will have more momentum. This means they will coast for longer even though the max speed is seemingly 4x.");
+        }
+
+        logger.info("Registering event listener");
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new MinecartListener(), this);
     }
@@ -60,7 +72,17 @@ public class HsRails extends JavaPlugin {
             }
 
             if (speed_multiplier > 0 && speed_multiplier <= 8) {
-                sender.sendMessage(ChatColor.AQUA + "speed multiplier set to: " + speed_multiplier);
+                String message = ChatColor.AQUA + "Speed multiplier set to: " + speed_multiplier;
+                String headsUp =
+                        ChatColor.YELLOW + "\nNote: multiplier set to more than 4x. Servers often struggle to provide max speeds above 4x,"
+                        + " and the carts may appear to be capped at 4x. However, carts will still have their momentum increased,"
+                        + " meaning they will coast for longer.";
+
+                boolean sendHeadsUp = !receivedHeadsUp.contains(sender) && speed_multiplier > 4;
+                sender.sendMessage(String.format("%s%s", message, sendHeadsUp ? headsUp : ""));
+                if (sendHeadsUp) {
+                    receivedHeadsUp.add(sender);
+                }
                 return true;
             }
 

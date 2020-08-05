@@ -1,5 +1,5 @@
 name: HsRails
-version: 1.0.1
+version: 1.0.2
 main: st.netb.mc.hsrails.HsRails
 commands:
   hsrails:
