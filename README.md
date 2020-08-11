@@ -1,5 +1,5 @@
 # hsrails
-## High Speed Rails
+### High Speed Rails
 
 A spigot/bukkit plugin to make minecarts worth building again.
 
@@ -20,6 +20,10 @@ Place a powered rail on a _redstone block_ to make it a _high-speed rail_. Place
 Use `/hsrails <multiplier>` to tweak how fast high-speed rails are.
 For permanent change, edit the config file `config.yml` in `plugins/HsRails/`.
 Multiplier must be between 0 and 8.
+
+Note: there seems to be a game limitation for speed but not momentum, and it seems to be around multiplier of 4x.
+Multipliers higher than 4x usually result in increased momentum, but not higher top speeds. 
+That means the carts will coast for longer, even though they appear to have the same top speed.
 
 #### Design considerations
 
@@ -48,3 +52,9 @@ To maintain high speeds you must of course build your tracks out of high-speed r
 ### Compiling
 This is a maven project made in intellij idea.
 To compile, simply run `mvn package`
+
+
+### Credits
+Adapted from [varesa's Minecart Speedplus](https://github.com/varesa/Minecart_speedplus).
+
+Thanks to LordNinka for discovering the effects of speed vs. momentum at high multipliers.
