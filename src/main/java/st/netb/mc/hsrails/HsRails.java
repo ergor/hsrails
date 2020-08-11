@@ -37,7 +37,7 @@ public class HsRails extends JavaPlugin {
         }
 
         if (speed_multiplier > 4) {
-            logger.info("Note: speed multiplier is set above 4. Typically, due server limitations you may not see an increase in speed greater than 4x,"
+            logger.info("Note: speed multiplier is set above 4. Typically, due to server limitations you may not see an increase in speed greater than 4x,"
                     + " however the carts will have more momentum. This means they will coast for longer even though the max speed is seemingly 4x.");
         }
 
