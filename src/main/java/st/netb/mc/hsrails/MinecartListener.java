@@ -15,6 +15,12 @@ public class MinecartListener implements Listener {
 
     private static final double BUKKIT_SPEED_MULTIPLIER = 0.4d;
 
+    private final Material boostBlock;
+
+    public MinecartListener(Material boostBlock) {
+        this.boostBlock = boostBlock;
+    }
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onVehicleMove(VehicleMoveEvent event) {
 
@@ -27,8 +33,8 @@ public class MinecartListener implements Listener {
             Block blockBelow = cartsWorld.getBlockAt(cartLocation.add(0, -1, 0));
 
             if (rail.getType() == Material.POWERED_RAIL) {
-                if (blockBelow.getType() == Material.REDSTONE_BLOCK) {
-                    cart.setMaxSpeed(BUKKIT_SPEED_MULTIPLIER * HsRails.getMultiplier());
+                if (blockBelow.getType() == boostBlock) {
+                    cart.setMaxSpeed(BUKKIT_SPEED_MULTIPLIER * HsRails.getConfiguration().getSpeedMultiplier());
                 }
                 else {
                     cart.setMaxSpeed(BUKKIT_SPEED_MULTIPLIER);

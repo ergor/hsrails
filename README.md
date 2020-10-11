@@ -3,27 +3,52 @@
 
 A spigot/bukkit plugin to make minecarts worth building again.
 
-For Minecraft version **1.14** and tested working for **1.15**. Will most likely work just fine on **newer versions as well**.
+For Minecraft version **1.14** and tested working on **1.15, 1.16.3**. Will most likely work just fine on **newer versions as well**.
 
-Place a powered rail on a redstone block to build high-speed rail.
-High-speed rails are by default 4x faster than regular powered rails, ie. 32 m/s, or 115 km/h. This is as fast as rocket powered elytra flight.
-
-The high-speed rail multiplier can be temporarily changed with the `/hsrails` command, or permanently changed in the config.
-
-**Note**: please read the _Design_ sections on how to use this plugin effectively.
+Place a powered rail on a _boost block_ (`redstone block` by default) to build high-speed rail. Place on any other block to get a regular powered rail.
 
 ![scrot](https://github.com/ergor/hsrails/blob/master/img/scrot.png)
 
-### Usage
-Place a powered rail on a _redstone block_ to make it a _high-speed rail_. Place on any other block to get a regular powered rail.
+High-speed rails are by default 4x faster than regular powered rails, ie. 32 m/s, or 115 km/h. This is as fast as rocket powered elytra flight.
 
-Use `/hsrails <multiplier>` to tweak how fast high-speed rails are.
-For permanent change, edit the config file `config.yml` in `plugins/HsRails/`.
-Multiplier must be between 0 and 8.
+The high-speed rail multiplier can be temporarily changed with the `/hsrails` command, or permanently changed in the config. 
+The boost block is also configurable. See _Usage_ section for commands and config options.
 
-Note: there seems to be a game limitation for speed but not momentum, and it seems to be around multiplier of 4x.
+**Note**: please read the _Design_ sections on how to keep your carts from derailing at high speeds.
+
+**Note**: there seems to be a game limitation for speed but not momentum, and it seems to be around multiplier of 4x.
 Multipliers higher than 4x usually result in increased momentum, but not higher top speeds. 
 That means the carts will coast for longer, even though they appear to have the same top speed.
+
+### Usage
+
+#### Commands
+
+Use `/hsrails <multiplier>` to tweak how fast high-speed rails are.
+Multiplier must be between 0 and 8.
+
+Example: set multiplier to 4
+```
+/hsrails 4
+```
+
+#### Config
+
+This is the default `HsRails/config.yml`:
+
+```
+speedMultiplier: 4.0
+boostBlock: "minecraft:redstone_block"
+```
+
+Allowed values are:
+
+- speedMultiplier:
+    - `> 0`
+    - `<= 8`
+- boostBlock:
+    - `minecraft:redstone_block`
+    - `minecraft:lapis_block`
 
 #### Design considerations
 
