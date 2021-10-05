@@ -1,4 +1,4 @@
-package st.netb.mc.hsrails;
+package no.netb.mc.hsrails;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

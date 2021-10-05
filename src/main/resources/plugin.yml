@@ -2,7 +2,7 @@ name: HsRails
 version: 1.1.0
 description: High speed minecart rails
 api-version: 1.14
-main: st.netb.mc.hsrails.HsRails
+main: no.netb.mc.hsrails.HsRails
 commands:
   hsrails:
     description: Sets new minecart speed limit.

@@ -1,4 +1,4 @@
-package st.netb.mc.hsrails;
+package no.netb.mc.hsrails;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
