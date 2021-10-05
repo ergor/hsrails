@@ -47,8 +47,9 @@ Allowed values are:
     - `> 0`
     - `<= 8`
 - boostBlock:
-    - `minecraft:redstone_block`
-    - `minecraft:lapis_block`
+    - Namespaced block. Look up the ID name in [the id list](https://www.minecraftinfo.com/idnamelist.htm) 
+      and prefix it with `minecraft:`. For example, type in `"minecraft:stone"` for stone block as boost block.
+    - If you type in `"any"`, every powered rail will be a high speed powered rail.
 
 #### Design considerations
 

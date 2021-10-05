@@ -3,28 +3,13 @@ package no.netb.mc.hsrails;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 public class Configuration {
 
     private double speedMultiplier;
     private Material boostBlock;
-
-    private static final Set<String> ALLOWED_MATS;
-    static {
-        Set<String> set = new HashSet<>();
-
-        // the names of Material enum fields is based on the namespaced key ids of the blocks. (eg. minecraft:stone -> Material.STONE)
-        Consumer<Material> keyMapper = material -> set.add(material.getKey().toString());
-        keyMapper.accept(Material.REDSTONE_BLOCK);
-        keyMapper.accept(Material.LAPIS_BLOCK);
-
-        ALLOWED_MATS = Collections.unmodifiableSet(set);
-    }
+    private boolean isCheatMode;
 
     public double getSpeedMultiplier() {
         return speedMultiplier;
@@ -38,8 +23,8 @@ public class Configuration {
         return boostBlock;
     }
 
-    public void setBoostBlock(Material boostBlock) {
-        this.boostBlock = boostBlock;
+    public boolean isCheatMode() {
+        return isCheatMode;
     }
 
     public void readConfig(FileConfiguration fileConfig, Logger logger) {
@@ -64,19 +49,25 @@ public class Configuration {
 
         { // Boost block
             String boostBlockKey = fileConfig.getString("boostBlock");
-            if (boostBlockKey != null
-                    && ALLOWED_MATS.contains(boostBlockKey)) {
-                this.boostBlock = Material.matchMaterial(boostBlockKey);
-                assert this.boostBlock != null;
+            if (boostBlockKey != null) {
+                if (boostBlockKey.equalsIgnoreCase("any")) {
+                    isCheatMode = true;
+                } else {
+                    boostBlock = Material.matchMaterial(boostBlockKey);
+                }
             }
-            else {
+            if (boostBlock == null && !isCheatMode) {
                 Material fallbackMat = Material.REDSTONE_BLOCK;
                 logger.warning(String.format("Warning: option 'boostBlock' was '%s' in config which is an illegal value. Falling back to using '%s'",
                         boostBlockKey == null ? "(undefined)" : boostBlockKey,
-                        fallbackMat.getKey().toString()));
-                this.boostBlock = fallbackMat;
+                        fallbackMat.getKey()));
+                boostBlock = fallbackMat;
             }
-            logger.info(String.format("Setting boost block to '%s'", this.boostBlock.getKey().toString()));
+            if (isCheatMode) {
+                logger.info("Boost block was set to 'any'. Every powered rail is now a high speed rail.");
+            } else {
+                logger.info(String.format("Setting boost block to '%s'", boostBlock.getKey()));
+            }
         }
     }
 }

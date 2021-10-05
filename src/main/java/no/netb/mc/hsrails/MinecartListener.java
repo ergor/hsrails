@@ -16,9 +16,11 @@ public class MinecartListener implements Listener {
     private static final double BUKKIT_SPEED_MULTIPLIER = 0.4d;
 
     private final Material boostBlock;
+    private final boolean isCheatMode;
 
-    public MinecartListener(Material boostBlock) {
+    public MinecartListener(Material boostBlock, boolean isCheatMode) {
         this.boostBlock = boostBlock;
+        this.isCheatMode = isCheatMode;
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -33,7 +35,7 @@ public class MinecartListener implements Listener {
             Block blockBelow = cartsWorld.getBlockAt(cartLocation.add(0, -1, 0));
 
             if (rail.getType() == Material.POWERED_RAIL) {
-                if (blockBelow.getType() == boostBlock) {
+                if (isCheatMode || blockBelow.getType() == boostBlock) {
                     cart.setMaxSpeed(BUKKIT_SPEED_MULTIPLIER * HsRails.getConfiguration().getSpeedMultiplier());
                 }
                 else {
