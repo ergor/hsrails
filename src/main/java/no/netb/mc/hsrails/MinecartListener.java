@@ -4,16 +4,21 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.RedstoneRail;
 import org.bukkit.entity.Minecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.bukkit.util.Vector;
 
 
 public class MinecartListener implements Listener {
 
-    private static final double BUKKIT_SPEED_MULTIPLIER = 0.4d;
+    /**
+     * Default speed, in meters per tick. A tick is 0.05 seconds, thus 0.4 * 1/0.05 = 8 m/s
+     */
+    private static final double DEFAULT_SPEED_METERS_PER_TICK = 0.4d;
 
     private final Material boostBlock;
     private final boolean isCheatMode;
@@ -36,10 +41,17 @@ public class MinecartListener implements Listener {
 
             if (rail.getType() == Material.POWERED_RAIL) {
                 if (isCheatMode || blockBelow.getType() == boostBlock) {
-                    cart.setMaxSpeed(BUKKIT_SPEED_MULTIPLIER * HsRails.getConfiguration().getSpeedMultiplier());
+                    cart.setMaxSpeed(DEFAULT_SPEED_METERS_PER_TICK * HsRails.getConfiguration().getSpeedMultiplier());
                 }
                 else {
-                    cart.setMaxSpeed(BUKKIT_SPEED_MULTIPLIER);
+                    cart.setMaxSpeed(DEFAULT_SPEED_METERS_PER_TICK);
+                }
+                RedstoneRail railBlockData = (RedstoneRail) rail.getBlockData();
+                if (!railBlockData.isPowered()
+                        && blockBelow.getType() == Material.OBSIDIAN) {
+                    Vector cartVelocity = cart.getVelocity();
+                    cartVelocity.multiply(0.25);
+                    cart.setVelocity(cartVelocity);
                 }
             }
         }
