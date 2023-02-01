@@ -3,7 +3,7 @@
 
 A spigot/bukkit plugin to make minecarts worth building again.
 
-For Minecraft version **1.14** and tested working on **1.15, 1.16.3**. Will most likely work just fine on **newer versions as well**.
+For Minecraft version **1.14** and tested working on **1.15, 1.16.3, 1.19**. Will most likely work just fine on **newer versions as well**.
 
 Place a powered rail on a _boost block_ (`redstone block` by default) to build high-speed rail. Place on any other block to get a regular powered rail.
 
@@ -13,6 +13,10 @@ High-speed rails are by default 4x faster than regular powered rails, ie. 32 m/s
 
 The high-speed rail multiplier can be temporarily changed with the `/hsrails` command, or permanently changed in the config. 
 The boost block is also configurable. See _Usage_ section for commands and config options.
+
+To help cope with the higher speeds, there is also a _hard brake block_ available (`obsidian` by default). If you place an
+_unpowered_ power rail on a hard brake block, the cart will decelerate faster than default. See _Usage_ section 
+for configuration options.
 
 **Note**: please read the _Design_ sections on how to keep your carts from derailing at high speeds.
 
@@ -39,6 +43,8 @@ This is the default `HsRails/config.yml`:
 ```
 speedMultiplier: 4.0
 boostBlock: "minecraft:redstone_block"
+hardBrakeMultiplier: 8.0
+hardBrakeBlock: "minecraft:obsidian"
 ```
 
 Allowed values are:
@@ -50,6 +56,10 @@ Allowed values are:
     - Namespaced block. Look up the ID name in [the id list](https://www.minecraftinfo.com/idnamelist.htm) 
       and prefix it with `minecraft:`. For example, type in `"minecraft:stone"` for stone block as boost block.
     - If you type in `"any"`, every powered rail will be a high speed powered rail.
+- hardBrakeMultiplier:
+  - `>= 1`
+- hardBrakeBlock:
+  - Any namespaced block (see info on `boostBlock` for details). `any` is not allowed here.
 
 #### Design considerations
 
@@ -74,6 +84,8 @@ These are my recommendations for building efficient high-speed tracks:
 
 To maintain high speeds you must of course build your tracks out of high-speed rails, because regular powered rails will slow you down. Only mix in regular powered rails in turns and slopes as mentioned above.
 
+If you want to stop a high speed cart quickly, for example if you have stations/stops on your route,
+you can use hard brake blocks with unpowered powered rails.
 
 ### Compiling
 This is a maven project made in intellij idea.
