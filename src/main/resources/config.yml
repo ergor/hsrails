@@ -1,2 +1,4 @@
 speedMultiplier: 4.0
 boostBlock: "minecraft:redstone_block"
+hardBrakeMultiplier: 8.0
+hardBrakeBlock: "minecraft:obsidian"

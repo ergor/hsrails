@@ -31,7 +31,11 @@ public class HsRails extends JavaPlugin {
 
         logger.info("Registering event listener");
         PluginManager pm = this.getServer().getPluginManager();
-        pm.registerEvents(new MinecartListener(CONFIGURATION.getBoostBlock(), CONFIGURATION.isCheatMode()), this);
+        pm.registerEvents(new MinecartListener(
+                CONFIGURATION.getBoostBlock(),
+                CONFIGURATION.getHardBrakeBlock(),
+                CONFIGURATION.isCheatMode()
+        ), this);
     }
 
     @Override

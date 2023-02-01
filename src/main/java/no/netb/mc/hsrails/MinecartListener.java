@@ -21,10 +21,12 @@ public class MinecartListener implements Listener {
     private static final double DEFAULT_SPEED_METERS_PER_TICK = 0.4d;
 
     private final Material boostBlock;
+    private final Material hardBrakeBlock;
     private final boolean isCheatMode;
 
-    public MinecartListener(Material boostBlock, boolean isCheatMode) {
+    public MinecartListener(Material boostBlock, Material hardBrakeBlock, boolean isCheatMode) {
         this.boostBlock = boostBlock;
+        this.hardBrakeBlock = hardBrakeBlock;
         this.isCheatMode = isCheatMode;
     }
 
@@ -48,9 +50,9 @@ public class MinecartListener implements Listener {
                 }
                 RedstoneRail railBlockData = (RedstoneRail) rail.getBlockData();
                 if (!railBlockData.isPowered()
-                        && blockBelow.getType() == Material.OBSIDIAN) {
+                        && blockBelow.getType() == hardBrakeBlock) {
                     Vector cartVelocity = cart.getVelocity();
-                    cartVelocity.multiply(0.25);
+                    cartVelocity.multiply(HsRails.getConfiguration().getHardBrakeMultiplier());
                     cart.setVelocity(cartVelocity);
                 }
             }
