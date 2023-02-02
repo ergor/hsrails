@@ -96,3 +96,5 @@ To compile, simply run `mvn package`
 Adapted from [varesa's Minecart Speedplus](https://github.com/varesa/Minecart_speedplus).
 
 Thanks to LordNinka for discovering the effects of speed vs. momentum at high multipliers.
+
+Thanks to TheWallaceman105 for bringing forth the idea of hard brake blocks and helping during development by testing.
