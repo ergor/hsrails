@@ -12,6 +12,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.util.Vector;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class MinecartListener implements Listener {
 
@@ -19,7 +22,7 @@ public class MinecartListener implements Listener {
      * Default speed, in meters per tick. A tick is 0.05 seconds, thus 0.4 * 1/0.05 = 8 m/s
      */
     private static final double DEFAULT_SPEED_METERS_PER_TICK = 0.4d;
-
+    private final Set<Integer> minecartBoosted = new HashSet<>();
     private final Material boostBlock;
     private final Material hardBrakeBlock;
     private final boolean isCheatMode;
@@ -39,14 +42,20 @@ public class MinecartListener implements Listener {
             World cartsWorld = cart.getWorld();
 
             Block rail = cartsWorld.getBlockAt(cartLocation);
-            Block blockBelow = cartsWorld.getBlockAt(cartLocation.add(0, -1, 0));
 
             if (rail.getType() == Material.POWERED_RAIL) {
+                Block blockBelow = cartsWorld.getBlockAt(cartLocation.add(0, -1, 0));
+
                 if (isCheatMode || blockBelow.getType() == boostBlock) {
-                    cart.setMaxSpeed(DEFAULT_SPEED_METERS_PER_TICK * HsRails.getConfiguration().getSpeedMultiplier());
-                }
-                else {
-                    cart.setMaxSpeed(DEFAULT_SPEED_METERS_PER_TICK);
+                    if (!minecartBoosted.contains(event.getVehicle().getEntityId())) {
+                        minecartBoosted.add(event.getVehicle().getEntityId());
+                        cart.setMaxSpeed(DEFAULT_SPEED_METERS_PER_TICK * HsRails.getConfiguration().getSpeedMultiplier());
+                    }
+                } else {
+                    if (cart.getMaxSpeed() != DEFAULT_SPEED_METERS_PER_TICK) {
+                        minecartBoosted.remove(event.getVehicle().getEntityId());
+                        cart.setMaxSpeed(DEFAULT_SPEED_METERS_PER_TICK);
+                    }
                 }
                 RedstoneRail railBlockData = (RedstoneRail) rail.getBlockData();
                 if (!railBlockData.isPowered()
