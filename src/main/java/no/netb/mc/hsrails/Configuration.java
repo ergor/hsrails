@@ -84,9 +84,9 @@ public class Configuration {
 
     private void readSpeedMultiplier(FileConfiguration fileConfig, Logger logger) {
         double speedMultiplier = fileConfig.getDouble("speedMultiplier");
-        if (speedMultiplier <= 0) {
-            logger.warning("Warning: speed multiplier set to 0 or below in config. Using value of 0.1 as fallback.");
-            speedMultiplier = 0.1;
+        if (speedMultiplier < 1d) {
+            logger.warning("Warning: speed multiplier set below 1 in config. Using value of 1 as fallback.");
+            speedMultiplier = 1d;
         } else if (speedMultiplier > 8) {
             logger.warning("Warning: speed multiplier set above 8 in config. Using value of 8 as fallback.");
             speedMultiplier = 8d;
@@ -104,8 +104,8 @@ public class Configuration {
     private void readHardBrakeMultiplier(FileConfiguration fileConfig, Logger logger) {
         double hardBrakeMultiplier = fileConfig.getDouble("hardBrakeMultiplier");
         if (hardBrakeMultiplier < 1.0) {
-            logger.warning("Warning: brake multiplier not set or set to below 1 in config. Using value of 1 as fallback.");
-            hardBrakeMultiplier = 1.0;
+            logger.warning("Warning: brake multiplier not set or set to below 1 in config. Using value of 8 as fallback.");
+            hardBrakeMultiplier = 8.0;
         }
         else {
             logger.info("Setting brake multiplier to " + hardBrakeMultiplier);

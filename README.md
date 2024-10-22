@@ -1,9 +1,9 @@
 # hsrails
 ### High Speed Rails
 
-A spigot/bukkit plugin to make minecarts worth building again.
+A spigot/bukkit plugin to make minecarts worth building.
 
-For Minecraft version **1.14** and tested working on **1.15, 1.16.3, 1.19**. Will most likely work just fine on **newer versions as well**.
+For Minecraft version **1.21.1** and tested working on **1.14, 1.15, 1.16.3, 1.19**. Will most likely work just fine on **newer versions as well**.
 
 Place a powered rail on a _boost block_ (`redstone block` by default) to build high-speed rail. Place on any other block to get a regular powered rail.
 
@@ -14,7 +14,7 @@ High-speed rails are by default 4x faster than regular powered rails, ie. 32 m/s
 The high-speed rail multiplier can be temporarily changed with the `/hsrails` command, or permanently changed in the config. 
 The boost block is also configurable. See _Usage_ section for commands and config options.
 
-To help cope with the higher speeds, there is also a _hard brake block_ available (`obsidian` by default). If you place an
+To help cope with the higher speeds, there is also a _hard brake block_ available (`soul sand` by default). If you place an
 _unpowered_ power rail on a hard brake block, the cart will decelerate faster than default. See _Usage_ section 
 for configuration options.
 
@@ -29,7 +29,7 @@ That means the carts will coast for longer, even though they appear to have the 
 #### Commands
 
 Use `/hsrails <multiplier>` to tweak how fast high-speed rails are.
-Multiplier must be between 0 and 8.
+Multiplier must be between 1 and 8.
 
 Example: set multiplier to 4
 ```
@@ -44,13 +44,13 @@ This is the default `HsRails/config.yml`:
 speedMultiplier: 4.0
 boostBlock: "minecraft:redstone_block"
 hardBrakeMultiplier: 8.0
-hardBrakeBlock: "minecraft:obsidian"
+hardBrakeBlock: "minecraft:soul_sand"
 ```
 
 Allowed values are:
 
 - speedMultiplier:
-    - `> 0`
+    - `>= 1`
     - `<= 8`
 - boostBlock:
     - Namespaced block. Look up the ID name in [the id list](https://www.minecraftinfo.com/idnamelist.htm) 
@@ -81,6 +81,7 @@ These are my recommendations for building efficient high-speed tracks:
 - Minimize number of slopes: build tunnels, bridges, etc. to stay on the same level.
 - Before turns and slopes, put one (or sometimes a couple of) regular powered rails to slow down and avoid derailment.
 - After turns and slopes, allow room for acceleration again.
+- To maintain top speed in high speed state, place a high speed rail every 30 blocks (ie. 1 powered rail + 29 iron rails; rinse and repeat)
 
 To maintain high speeds you must of course build your tracks out of high-speed rails, because regular powered rails will slow you down. Only mix in regular powered rails in turns and slopes as mentioned above.
 

@@ -7,7 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -19,7 +22,10 @@ public class HsRails extends JavaPlugin {
         return CONFIGURATION;
     }
 
-    private static Set<CommandSender> receivedHeadsUp = new HashSet<>();
+    private static final Set<CommandSender> receivedHeadsUp = new HashSet<>();
+
+    public static Map<Player, DebugSubscription> debuggers = new HashMap<>();
+    public static double coastFactor = 30d;
 
     @Override
     public void onEnable() {
@@ -36,6 +42,7 @@ public class HsRails extends JavaPlugin {
                 CONFIGURATION.getHardBrakeBlock(),
                 CONFIGURATION.isCheatMode()
         ), this);
+        pm.registerEvents(new PlayerDisconnectListener(logger), this);
     }
 
     @Override
@@ -53,6 +60,23 @@ public class HsRails extends JavaPlugin {
                     player.sendMessage(ChatColor.RED + "You don't have permission to use this command");
                     return true;
                 }
+
+                if (args.length > 0 && (args[0].equalsIgnoreCase("d") || args[0].equalsIgnoreCase("dd"))) {
+                    Boolean currentMode = Optional.ofNullable(debuggers.get(player))
+                            .map(DebugSubscription::getAcceptsVerbose)
+                            .orElse(null);
+
+                    boolean verbose = args[0].equalsIgnoreCase("dd");
+                    if (currentMode == null || currentMode != verbose) {
+                        debuggers.put(player, new DebugSubscription(player, verbose));
+                        player.sendMessage("debug mode: " + (verbose ? "ON [VERBOSE]" : "ON [NORMAL]"));
+                        return true;
+                    }
+
+                    debuggers.remove(player);
+                    player.sendMessage("debug mode: OFF");
+                    return true;
+                }
             }
 
             try {
@@ -64,7 +88,7 @@ public class HsRails extends JavaPlugin {
             }
 
             double speedMultiplier = CONFIGURATION.getSpeedMultiplier();
-            if (speedMultiplier > 0 && speedMultiplier <= 8) {
+            if (speedMultiplier >= 1d && speedMultiplier <= 8d) {
                 String message = ChatColor.AQUA + "Speed multiplier set to: " + speedMultiplier;
                 String headsUp =
                         ChatColor.YELLOW + "\nNote: multiplier set to more than 4x. Servers often struggle to provide max speeds above 4x,"
@@ -79,7 +103,7 @@ public class HsRails extends JavaPlugin {
                 return true;
             }
 
-            sender.sendMessage(ChatColor.RED + "multiplier must be greater than 0 and max 8");
+            sender.sendMessage(ChatColor.RED + "multiplier must be at least 1 and at most 8");
             return true;
         }
 
