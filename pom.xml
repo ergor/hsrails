@@ -6,7 +6,7 @@
 
     <groupId>no.netb.mc.hsrails</groupId>
     <artifactId>hsrails</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
 
     <properties>
         <maven.compiler.release>11</maven.compiler.release>

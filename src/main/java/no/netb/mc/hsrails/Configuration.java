@@ -78,7 +78,12 @@ public class Configuration {
             hardBrakeBlock = Material.matchMaterial(hardBrakeBlockKey);
         }
         if (hardBrakeBlock == null) {
+            logger.warning(String.format("Warning: option 'boostBlock' was '%s' in config which is an illegal value.",
+                    hardBrakeBlockKey == null ? "(undefined)" : hardBrakeBlockKey
+                    ));
             logger.warning("Warning: option 'hardBrakeBlock' was not specified or invalid value was given. Hard braking disabled.");
+        } else {
+            logger.info(String.format("Setting hard brake block to '%s'", hardBrakeBlock.getKey()));
         }
     }
 
