@@ -3,7 +3,7 @@
 
 A spigot/bukkit plugin to make minecarts worth building.
 
-For Minecraft version **1.21.1** and tested working on **1.14, 1.15, 1.16.3, 1.19**. Will most likely work just fine on **newer versions as well**.
+For Minecraft version **1.21.5** and tested working on **1.14, 1.15, 1.16.3, 1.19, 1.21.1**. Will most likely work just fine on **newer versions as well**.
 
 Place a powered rail on a _boost block_ (`redstone block` by default) to build high-speed rail. Place on any other block to get a regular powered rail.
 
@@ -23,6 +23,9 @@ for configuration options.
 **Note**: there seems to be a game limitation for speed but not momentum, and it seems to be around multiplier of 4x.
 Multipliers higher than 4x usually result in increased momentum, but not higher top speeds. 
 That means the carts will coast for longer, even though they appear to have the same top speed.
+
+**Note**: the plugin _is_ compatible with the Improved Minecarts experiment. It will simply apply the multiplier on 
+top of the `minecartMaxSpeed` gamerule.
 
 ### Usage
 
@@ -96,6 +99,9 @@ To compile, simply run `mvn package`
 ### Credits
 Adapted from [varesa's Minecart Speedplus](https://github.com/varesa/Minecart_speedplus).
 
-Thanks to LordNinka for discovering the effects of speed vs. momentum at high multipliers.
-
-Thanks to TheWallaceman105 for bringing forth the idea of hard brake blocks and helping during development by testing.
+Thanks to:
+- LordNinka for discovering the effects of speed vs. momentum at high multipliers.
+- TheWallaceman105 for bringing forth the idea of hard brake blocks and helping during development by testing.
+- Janicki92 for key insights that finally resolved the infinite momentum bug.
+- GoodrichDev for testing on Folia.
+- gavinft for submitting code to support the new `minecartMaxSpeed` gamerule.

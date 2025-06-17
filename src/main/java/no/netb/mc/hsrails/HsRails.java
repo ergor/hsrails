@@ -87,6 +87,7 @@ public class HsRails extends JavaPlugin {
                 return false;
             }
 
+            // TODO: in the future, if the new minecart physics gets accepted, then the speed multiplier glitch will be fixed. then keep this only for compatibility
             double speedMultiplier = CONFIGURATION.getSpeedMultiplier();
             if (speedMultiplier >= 1d && speedMultiplier <= 8d) {
                 String message = ChatColor.AQUA + "Speed multiplier set to: " + speedMultiplier;

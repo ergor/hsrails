@@ -1,5 +1,5 @@
 name: HsRails
-version: 1.4.1
+version: 1.5.0
 description: High speed minecart rails
 api-version: 1.14
 main: no.netb.mc.hsrails.HsRails

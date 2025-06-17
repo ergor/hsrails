@@ -105,6 +105,7 @@ public class MinecartListener implements Listener {
                 }
             }
             // This handles the infinite momentum bug as reported by GitHub issue #6.
+            // TODO: in the future, if the new minecart physics gets accepted, then this fix will no longer be needed. Maybe optionally execute this for compatibility.
             else if (isEnteredNewBlock) {
                 MinecartState state = boostedMinecarts.get(entityId);
                 switch (rail.getType()) {

@@ -6,7 +6,7 @@
 
     <groupId>no.netb.mc.hsrails</groupId>
     <artifactId>hsrails</artifactId>
-    <version>1.4.1</version>
+    <version>1.5.0</version>
 
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.21.1-R0.1-SNAPSHOT</version>
+            <version>1.21.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
