@@ -40,7 +40,7 @@ public class MinecartListener implements Listener {
     /**
      * Default speed, in meters per tick. A tick is 0.05 seconds, thus 0.4 * 1/0.05 = 8 m/s
      */
-    private static final double DEFAULT_SPEED_METERS_PER_TICK = 0.4d;
+    private final MinecartSpeedGameruleValue currentDefaultSpeedMetersPerTick;
     private final Map<Integer, MinecartState> boostedMinecarts = new HashMap<>();
     private final Material boostBlock;
     private final Material hardBrakeBlock;
@@ -50,6 +50,7 @@ public class MinecartListener implements Listener {
         this.boostBlock = boostBlock;
         this.hardBrakeBlock = hardBrakeBlock;
         this.isCheatMode = isCheatMode;
+        this.currentDefaultSpeedMetersPerTick = new MinecartSpeedGameruleValue();
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -67,8 +68,9 @@ public class MinecartListener implements Listener {
             final World cartsWorld = cart.getWorld();
 
             final Block rail = cartsWorld.getBlockAt(cartLocation);
+            final double defaultSpeed = currentDefaultSpeedMetersPerTick.obtain(cartsWorld);
             final double speedMultiplier = HsRails.getConfiguration().getSpeedMultiplier();
-            final double boostedMaxSpeed = DEFAULT_SPEED_METERS_PER_TICK * speedMultiplier;
+            final double boostedMaxSpeed = defaultSpeed * speedMultiplier;
 
             if (rail.getType() == Material.POWERED_RAIL) {
                 Block blockBelow = cartsWorld.getBlockAt(cartLocation.add(0, -1, 0));
@@ -87,9 +89,9 @@ public class MinecartListener implements Listener {
                     }
                 } else {
                     // carts should NOT be in high speed state when passing over regular power rails; clear it.
-                    if (cart.getMaxSpeed() != DEFAULT_SPEED_METERS_PER_TICK) {
+                    if (cart.getMaxSpeed() != defaultSpeed) {
                         boostedMinecarts.remove(entityId);
-                        cart.setMaxSpeed(DEFAULT_SPEED_METERS_PER_TICK);
+                        cart.setMaxSpeed(defaultSpeed);
                         log(false, "minecart [%d] evicted", entityId);
                     }
                 }
@@ -110,8 +112,8 @@ public class MinecartListener implements Listener {
                     case ACTIVATOR_RAIL:
                     case DETECTOR_RAIL:
                         if (state != null) { // state != null means the cart is in the high speed state.
-                            if (cart.getVelocity().length() < DEFAULT_SPEED_METERS_PER_TICK) {
-                                cart.setMaxSpeed(DEFAULT_SPEED_METERS_PER_TICK);
+                            if (cart.getVelocity().length() < defaultSpeed) {
+                                cart.setMaxSpeed(defaultSpeed);
                                 boostedMinecarts.remove(entityId);
                                 log(false, "momentum: too slow, clearing boost state");
                                 break;
@@ -119,7 +121,7 @@ public class MinecartListener implements Listener {
                             state.blocksCoasted++;
                             if (state.blocksCoasted > HsRails.coastFactor) {
                                 double factor = Math.max(1d, speedMultiplier - ((state.blocksCoasted - HsRails.coastFactor) / HsRails.coastFactor));
-                                cart.setMaxSpeed(DEFAULT_SPEED_METERS_PER_TICK * factor);
+                                cart.setMaxSpeed(defaultSpeed * factor);
                                 if (factor == 1) {
                                     boostedMinecarts.remove(entityId);
                                     log(false, "momentum: factor reached 1, clearing boost state");
